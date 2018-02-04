@@ -1,27 +1,6 @@
-Bootswatch - HTML base template: http://www.codeply.com/go/rV7KhUjwCN
-Navgoco sidebar:
-Anchor JS library
-TOC generator script
-Lunr search
-Search implementation from Mike Nemegan
-Bootstrap
-syntax.css --> preston werner
-monokai.css --> https://github.com/richleland/pygments-css
-
-
-
-
-
-
-
-
-
-
-
-
 The MIT License (MIT)
 
-Copyright (c) 2016 Tom Johnson
+Copyright (c) 2015 DigitalMindCH
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
