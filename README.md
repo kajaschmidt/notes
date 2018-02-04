@@ -1,3 +1,6 @@
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/bruth/jekyll-docs-template/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+# About
 
-Read the docs: http://bruth.github.io/jekyll-docs-template
+This repo serves as a blog to store chapter summaries, class notes, or more. 
+
+## Template
+Read the [documentation](http://bruth.github.io/jekyll-docs-template) of the Jekyll Docs Template by [Bitdeli Badge](https://github.com/bruth/jekyll-docs-template).
