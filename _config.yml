@@ -45,7 +45,9 @@ future: true
 exclude: ['bin', 'README.md']
 
 # Use the kramdown Markdown renderer
-markdown: redcarpet
+markdown: kramdown
+kramdown:
+    math_engine: mathjax
 redcarpet:
     extensions: [
         'no_intra_emphasis',
