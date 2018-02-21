@@ -24,7 +24,8 @@ sections: [
     ['ref', 'Reference'],
     ['dev', 'Developers'],
     ['post', 'Posts'],
-    ['fodl', 'Fundamentals of Deep Learning']
+    ['fodl', 'Fundamentals of Deep Learning'],
+    ['ores', 'Other Resources']
 ]
 
 # Keep as an empty string if served up at the root. If served up at a specific
