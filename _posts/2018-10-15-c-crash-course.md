@@ -8,7 +8,8 @@ date: 2018-10-15 23:30:31
 ## Basic process
 
 1. Create .c file and save it in directory
-```c
+
+```cpp
 #include <stdio.h> // imports (libraries indicated by ".h"); stands for "standart input output" ("ea" Eingabe/Ausgabe auf Deutsch)
 
 int main() {
