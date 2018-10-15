@@ -1,0 +1,1 @@
+../_posts/2018-10-15-c-crash-course.md
