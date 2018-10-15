@@ -1,1 +1,0 @@
-../_posts/2018-02-23-2-training-feedforward-neural-networks.md
