@@ -24,13 +24,13 @@ order: 1
 
 ##### C-Kurs
 6 der 7 ersten Aufgaben müssen bestanden werden.
-- [ ] Aufgabe 1 – bis 18.10.2018, 22:00Uhr
-- [ ] Aufgabe 2 – bis 19.10.2018, 22:00Uhr
-- [ ] Aufgabe 3 – bis 22.10.2018, 22:00Uhr
-- [ ] Aufgabe 4 – bis 23.10.2018, 22:00Uhr
-- [ ] Aufgabe 5 – bis 24.10.2018, 22:00Uhr
-- [ ] Aufgabe 6 – bis 25.10.2018, 22:00Uhr
-- [ ] Aufgabe 7 – bis 26.10.2018, 22:00Uhr
+- [ ] Aufgabe 1 – bis 18.10.2018, 21:59Uhr
+- [ ] Aufgabe 2 – bis 19.10.2018, 21:59Uhr
+- [ ] Aufgabe 3 – bis 22.10.2018, 21:59Uhr
+- [ ] Aufgabe 4 – bis 23.10.2018, 21:59Uhr
+- [ ] Aufgabe 5 – bis 24.10.2018, 21:59Uhr
+- [ ] Aufgabe 6 – bis 25.10.2018, 21:59Uhr
+- [ ] Aufgabe 7 – bis 26.10.2018, 21:59Uhr
 - [ ] Aufgabe 8 (Debugging)
 
 ##### IntroProg
