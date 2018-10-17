@@ -6,9 +6,9 @@ date: 2018-10-15 23:30:31
 order: 2
 ---
 
-# 1. ["hello, world"](https://isis.tu-berlin.de/pluginfile.php/1088795/mod_resource/content/2/ws1819-ckurs-tag1-hello-world.pdf)
+## 1. ["hello, world"](https://isis.tu-berlin.de/pluginfile.php/1088795/mod_resource/content/2/ws1819-ckurs-tag1-hello-world.pdf)
 
-### C
+#### C Code
 * Entwickelt zwischen 1969 und 1973 von Dennis Ritchie (Bell Labs); Touring-Award Gewonnen
 * Standardisierung:
   * ANSI C Standard 1989 durch American National Standards (wurde standardisiert)
@@ -17,12 +17,12 @@ order: 2
 * Systemsprache für systemnahe Programmierung (man darf alles tun, muss aber aufpassen was man tut)
 * Eng mit Unix verbunden
 
-### Computersysteme
+#### Computersysteme
 Bestandteile um Anwendungsprogramme auszuführen:
   * Hardware (Prozessor, Arbeitsspeicher)
   * Software (Betriebssystem, Textverarbeitungsprogramme, ...)
 
-### Create, Compile, Execute
+#### Create, Compile, Execute
 
 1. **Create and save .c file** in directory with source code
   ```cpp
@@ -56,9 +56,9 @@ Bestandteile um Anwendungsprogramme auszuführen:
 
 3. **Execute programm** with command `./<programm-name>` using processor
 
-# 2. [Die ersten Schritte](https://isis.tu-berlin.de/pluginfile.php/1095843/mod_resource/content/2/ws1819-ckurs-tag2.pdf)
+## 2. [Die ersten Schritte](https://isis.tu-berlin.de/pluginfile.php/1095843/mod_resource/content/2/ws1819-ckurs-tag2.pdf)
 
-#### Algorithmus vs. Programm
+##### Algorithmus vs. Programm
 <span style="color:red">__*Def*__ Algorithmus:</span> Liste von Anweisungen, die Essenz eines Programms und wird in Pseudocode aufgeschrieben
 
 **Wichtige Aspekte:**
@@ -92,7 +92,7 @@ int main() {
 }
 ```
 
-### C-Sprachelemente
+#### C-Sprachelemente
 
 **Speziell in C:**
 ```cpp
@@ -102,6 +102,28 @@ if ( a ) {
 }
 ```
 Dann gibt dieses Programm *nichts* aus (anders als in anderen Programmiersprachen)
+
+
+
+## 3.
+
+## Vocab
+| **Deutsch** | **English** | **Definition** |
+| --- | --- | --- |
+| Algorithmus | Algorithm | Liste von Anweisungen; die Essenz eines Programms; wird in Pseudocode aufgeschrieben |
+| - | Compiler | translation program, translates source code to machine code for a processor |
+| Kernbetriebssystem | Kernel |
+| Quellcode | Source code | unformatted ASCII text; should be well documented |
+| - | LLVM | ... |
+| - | ASCII | ... |
+| - | GCC | ... |
+| Pseudocode | Pseudocode | ... |
+
+## Syntax & Semantics
+| **Component** | **Detail** | **Example** |
+| --- | --- | --- |
+| Function | indicated by `()` and followed by `{}` which contains commands/variables essential for the function | `main()`, `if (<condition>) {<block-to-execute>}`|
+| Block | `{}` |
 
 * Typen
   * `int`
@@ -149,27 +171,6 @@ Dann gibt dieses Programm *nichts* aus (anders als in anderen Programmiersprache
 * `\"`: "
 * `\\`: \
 * `%%`: %
-
-# 3. 
-
-## Vocab
-| **Deutsch** | **English** | **Definition** |
----
-| Algorithmus | Algorithm | Liste von Anweisungen; die Essenz eines Programms; wird in Pseudocode aufgeschrieben |
-| --- | Compiler | translation program, translates source code to machine code for a processor |
-| Kernbetriebssystem | Kernel |
-| Quellcode | Source code | unformatted ASCII text; should be well documented |
-| --- | LLVM | ... |
-| --- | ASCII | ... |
-| --- | GCC | ... |
-| Pseudocode | Pseudocode | ... |
-
-## Syntax & Semantics
-| **Component** | **Detail** | **Example** |
----
-| Function | indicated by `()` and followed by `{}` which contains commands/variables essential for the function | `main()`, `if (<condition>) {<block-to-execute>}`|
-| Block | `{}`
-
 
 ## Further shell commands
 ```shell
