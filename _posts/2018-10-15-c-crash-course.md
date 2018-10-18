@@ -94,18 +94,77 @@ int main() {
 
 #### C-Sprachelemente
 
-**Speziell in C:**
+**Speziell in C:** Diese Programm gibt *nichts* aus (anders als in anderen Programmiersprachen)
+
 ```cpp
 int a = 0;
 if ( a ) {
   printf("True\n");
 }
 ```
-Dann gibt dieses Programm *nichts* aus (anders als in anderen Programmiersprachen)
 
 
+## 3. [Kontrollstrukturen & Funktionen](https://isis.tu-berlin.de/pluginfile.php/1098309/mod_resource/content/3/ws1819-ckurs-tag3.pdf)
 
-## 3.
+#### Syntax Beschreibung: Backus-Naur form
+- B&N wird zur Syntax-Definition von Programmiersprachen genutzt.
+- Strukturierte Programmierung: "pretty printing"
+  - Modularisierung
+  - Kapselung
+  - Dokumentation
+  - Vermeidung von komplexen Kontrollstrukturen
+
+```cpp
+<block> ::= {<statements>}
+<statements> ::= <statement> |
+    <statements> <statement>
+```
+
+##### `i++ vs. ++i`
+Semantisch sind `i++`  und `++i` korrekt, syntaktisch sind sie aber unterschiedlich
+```cpp
+j = ++i; // Inkrementiert i zuerst, dann weist es i zu j zu
+j = i++ // Weist zuerst i zu j, dann inkrementiert es i
+```
+
+##### If-Statements and Loops
+- While und For Loops sind semantisch äquivalent
+```cpp
+// For loop
+int i = <start>; // Gute Programmierformatierung den Integer bereits vor dem for-loop zu initiieren!
+for (i = <start>; i <= <Abbruchkondition>; i++) {
+  <block>
+}
+
+// While loop
+int i = <start>;
+while (i <= <Abbruchskondition>) {
+  <block>
+  i++;
+}
+
+// if statement
+if (<Kondition>)
+    <Block>
+  else if (<Kondition>)
+    <Block>
+  else
+    <Block>
+```
+
+#### Funktionen
+**Funktion definieren**
+```cpp
+// function to do ...
+int max(int a, int b) {
+  if (<condition>)    // condition
+    <block>;
+    return <content>; // explain return
+  else
+    <block>;
+    return <content>; // explain return
+}
+```
 
 ## Vocab
 | **Deutsch** | **English** | **Definition** |
@@ -118,8 +177,14 @@ Dann gibt dieses Programm *nichts* aus (anders als in anderen Programmiersprache
 | - | ASCII | ... |
 | - | GCC | ... |
 | Pseudocode | Pseudocode | ... |
+| - | Syntax | legt fest, welche Zeichenketten Teil der Sprache sind |
+| - | Semantik | legt fest die Zeichenkette (Syntax) bedeutet |
 
 ## Syntax & Semantics
+
+- Bei Semantikfehlern kompiliert das Programm, gibt aber eine Warnung ab
+- Bei Syntaxfehlern kompiliert das Programm nicht.
+
 | **Component** | **Detail** | **Example** |
 | --- | --- | --- |
 | Function | indicated by `()` and followed by `{}` which contains commands/variables essential for the function | `main()`, `if (<condition>) {<block-to-execute>}`|
@@ -134,6 +199,7 @@ Dann gibt dieses Programm *nichts* aus (anders als in anderen Programmiersprache
     * printf Platzhalter: `%c`
   * `float`
   * `void`
+  * Notiz: Boolean gibt es nicht; `int boolean = 0` repräsentiert `false`
   * ...
 * Mathematische Operationen
   * `+`
@@ -188,5 +254,4 @@ svn log -r1:HEAD // see commit log
 // other
 more <Dateiname> // druckt Dateiinhalt aus --> in-terminal text editor?
 cat <Dateiname> // auch ein in-terminal text editor ?
-
 ```
