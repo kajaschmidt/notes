@@ -129,6 +129,7 @@ j = i++ // Weist zuerst i zu j, dann inkrementiert es i
 
 ##### If-Statements and Loops
 - While und For Loops sind semantisch äquivalent
+
 ```cpp
 // For loop
 int i = <start>; // Gute Programmierformatierung den Integer bereits vor dem for-loop zu initiieren!
@@ -164,7 +165,32 @@ int max(int a, int b) {
     <block>;
     return <content>; // explain return
 }
+
+// Ex. 1: function to implement addition
+int add(int x, int y) {
+  int result;
+  result = x + y;
+
+  return result;
+}
+
+// Ex. 2: function to implement subtraction
+int sub(int x, int y) {
+  return x - y;
+}
+
+// Ex. 3: function to implement powers
+int power(int x, int n) {
+  int result;
+  for (int i = 1, i == n; i++) {
+    result *= x; // result = result * x
+  }
+  return result;
+}
+
 ```
+
+
 
 ## Vocab
 | **Deutsch** | **English** | **Definition** |
