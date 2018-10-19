@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Course Overview"
+title: "Overview"
 category: introprog
 date: 2018-10-16 00:08:57
 order: 1

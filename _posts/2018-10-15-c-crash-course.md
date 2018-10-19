@@ -6,7 +6,11 @@ date: 2018-10-15 23:30:31
 order: 2
 ---
 
-## 1. ["hello, world"](https://isis.tu-berlin.de/pluginfile.php/1088795/mod_resource/content/2/ws1819-ckurs-tag1-hello-world.pdf)
+## Vorlesungsmaterial
+1. ["hello, world"](https://isis.tu-berlin.de/pluginfile.php/1088795/mod_resource/content/2/ws1819-ckurs-tag1-hello-world.pdf)
+2. [Die ersten Schritte](https://isis.tu-berlin.de/pluginfile.php/1095843/mod_resource/content/2/ws1819-ckurs-tag2.pdf)
+3. [Kontrollstrukturen & Funktionen](https://isis.tu-berlin.de/pluginfile.php/1098309/mod_resource/content/3/ws1819-ckurs-tag3.pdf)
+4. [Rekursive Funktionen & Bibliotheken](https://isis.tu-berlin.de/pluginfile.php/1101335/mod_resource/content/2/ws1819-ckurs-tag4.pdf)
 
 #### C Code
 * Entwickelt zwischen 1969 und 1973 von Dennis Ritchie (Bell Labs); Touring-Award Gewonnen
@@ -56,7 +60,6 @@ Bestandteile um Anwendungsprogramme auszuführen:
 
 3. **Execute programm** with command `./<programm-name>` using processor
 
-## 2. [Die ersten Schritte](https://isis.tu-berlin.de/pluginfile.php/1095843/mod_resource/content/2/ws1819-ckurs-tag2.pdf)
 
 ##### Algorithmus vs. Programm
 <span style="color:red">__*Def*__ Algorithmus:</span> Liste von Anweisungen, die Essenz eines Programms und wird in Pseudocode aufgeschrieben
@@ -102,9 +105,6 @@ if ( a ) {
   printf("True\n");
 }
 ```
-
-
-## 3. [Kontrollstrukturen & Funktionen](https://isis.tu-berlin.de/pluginfile.php/1098309/mod_resource/content/3/ws1819-ckurs-tag3.pdf)
 
 #### Syntax Beschreibung: Backus-Naur form
 - B&N wird zur Syntax-Definition von Programmiersprachen genutzt.
@@ -154,6 +154,12 @@ if (<Kondition>)
 ```
 
 #### Funktionen
+
+- Modularisierung
+- Kapselung
+- Dokumentation
+- Vermeidung von komplexen Kontrollstrukturen
+
 **Funktion definieren**
 ```cpp
 // function to do ...
@@ -181,30 +187,80 @@ int sub(int x, int y) {
 
 // Ex. 3: function to implement powers
 int power(int x, int n) {
-  int result;
+  if ( !(x >= 0 && n >= 0) ) {
+    return -1;
+  }
+  int result = 1;
   for (int i = 1, i == n; i++) {
     result *= x; // result = result * x
   }
   return result;
 }
-
 ```
 
+##### Rekursive Funktionen
+- Funktion ruft sich selber auf
 
+Beispiel:
+```cpp
+int recursion(int a) {
+  if (a > 41) { //Abbruchbedingung
+    return a;
+  }
+  return recursion(a+1) //rekursiver Aufruf
+}
+```
+Diese Funktion ist *nicht* endlos, da a sich nicht selber überschreibt. Sobald `a > 41` wird `a` ausgedruckt, und das war es dann.
+
+Beispiel: Faktorial Funktion
+```cpp
+int fak(int n) {
+  if (n <= 1) { // Abbruchbedingung
+    return 1;
+  } else {
+    return n * fak(n - 1); // rekursiver Aufruf
+  }
+}
+
+// ODER
+int fak(int n) {
+  if (n >= 1) return 1;
+  return n * fak(n - 1);
+}
+```
+**Komplexität:** <br>
+z.B. eine Baumstruktur zu nutzen um Zahlenreihen erst zu sortieren, und dann zu filtern. Dadurch kann man viel effizienter Programmieren. Solche Konstrukte zu erkennen und zu erstellen machen gute Programmierer aus.
+
+
+#### Bibliotheken
+
+**Modularisierung:** C Programme bestehen aus einer Menge von FUnktionen die in verschiedene Module (Dateien) getrennt werden. Dies dient der Übersichtlichkeit, Erweiterbarkeit, Wiederverwendbarkeit und Wartbarkeit des Codes. <br>
+z.B. Statt `datei.c` zu nutzen welches eine `max()`-Funktion und `int main()`-Funktion beinhaltet, kann man mehrere Dateien erstellen:
+* `name-header.h`- Bibliothek
+* `name-main.c` - Hauptdatei (beinhaltet `#include "name-header.h"`)
+* `name-function.c` - Funktion
+
+##### Präprozessoren
+* Bearbeitet die Direktiven
+* Bspl: `#define, #include`
+* z.b. `#define MAXLEN 10`
+
+Note: um weitere Directories hinzuzufügen: explizit mittels `-L`für Bibliotheken und `-I` für Headerdateien beim Kompilieren angeben.
 
 ## Vocab
+
 | **Deutsch** | **English** | **Definition** |
 | --- | --- | --- |
 | Algorithmus | Algorithm | Liste von Anweisungen; die Essenz eines Programms; wird in Pseudocode aufgeschrieben |
-| - | Compiler | translation program, translates source code to machine code for a processor |
+| . | Compiler | translation program, translates source code to machine code for a processor |
 | Kernbetriebssystem | Kernel |
 | Quellcode | Source code | unformatted ASCII text; should be well documented |
-| - | LLVM | ... |
-| - | ASCII | ... |
-| - | GCC | ... |
+| . | LLVM | ... |
+| . | ASCII | ... |
+| . | GCC | ... |
 | Pseudocode | Pseudocode | ... |
-| - | Syntax | legt fest, welche Zeichenketten Teil der Sprache sind |
-| - | Semantik | legt fest die Zeichenkette (Syntax) bedeutet |
+| . | Syntax | legt fest, welche Zeichenketten Teil der Sprache sind |
+| . | Semantik | legt fest die Zeichenkette (Syntax) bedeutet |
 
 ## Syntax & Semantics
 
@@ -281,3 +337,4 @@ svn log -r1:HEAD // see commit log
 more <Dateiname> // druckt Dateiinhalt aus --> in-terminal text editor?
 cat <Dateiname> // auch ein in-terminal text editor ?
 ```
+--> Keine globalen Variablen erstellen!

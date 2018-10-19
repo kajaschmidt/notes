@@ -25,7 +25,8 @@ sections: [
     ['dev', 'Developers'],
     ['post', 'Posts'],
     ['introprog', 'Intro to Programming'],
-    ['bk', 'Berechenbarkeit & Komplexität']
+    ['bk', 'Berechenbarkeit & Komplexität'], 
+    ['webtech', 'Webtechnologien']
 ]
 
 # Keep as an empty string if served up at the root. If served up at a specific
