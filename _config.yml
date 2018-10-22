@@ -26,7 +26,11 @@ sections: [
     ['post', 'Posts'],
     ['introprog', 'Intro to Programming'],
     ['bk', 'Berechenbarkeit & Komplexität'], 
-    ['webtech', 'Webtechnologien']
+    ['webtech', 'Webtechnologien'], 
+    ['techrecht', 'Technikrecht I'], 
+    ['fosa', 'Formale Sprachen und Automaten'], 
+    ['rorg', 'Rechnerorganisation'], 
+    ['iprop', 'Informatik Propädeutikum']
 ]
 
 # Keep as an empty string if served up at the root. If served up at a specific

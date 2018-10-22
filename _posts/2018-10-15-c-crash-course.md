@@ -11,6 +11,7 @@ order: 2
 2. [Die ersten Schritte](https://isis.tu-berlin.de/pluginfile.php/1095843/mod_resource/content/2/ws1819-ckurs-tag2.pdf)
 3. [Kontrollstrukturen & Funktionen](https://isis.tu-berlin.de/pluginfile.php/1098309/mod_resource/content/3/ws1819-ckurs-tag3.pdf)
 4. [Rekursive Funktionen & Bibliotheken](https://isis.tu-berlin.de/pluginfile.php/1101335/mod_resource/content/2/ws1819-ckurs-tag4.pdf)
+5. [Arrays & Adressen](https://isis.tu-berlin.de/pluginfile.php/1106762/mod_resource/content/1/ws1819-ckurs-tag5.pdf)
 
 #### C Code
 * Entwickelt zwischen 1969 und 1973 von Dennis Ritchie (Bell Labs); Touring-Award Gewonnen
@@ -159,6 +160,7 @@ if (<Kondition>)
 - Kapselung
 - Dokumentation
 - Vermeidung von komplexen Kontrollstrukturen
+- Variablen einer Funktion werden nur innerhalb der Funktion gespeichert, nicht außerhalb (--> in dem Fall kann mein Speicheradressen nutzen)
 
 **Funktion definieren**
 ```cpp
@@ -228,6 +230,27 @@ int fak(int n) {
   return n * fak(n - 1);
 }
 ```
+
+##### Scanf
+```cpp
+int lese_int() {
+    int number = 0;
+    int ret = 0;
+    char c;
+    printf("Bitte geben sie eine Nummer ein: ");
+    while(ret == 0) {
+        ret = scanf("%d%c", &number, &c);
+        while (c != '\n' && getchar() != '\n') { };
+        if (ret == 0)
+            printf("\nDas war keine Nummer. Versuchen sie es erneut: ");
+    }
+
+    return number;
+}
+```
+- or check out "getchar" function
+
+
 **Komplexität:** <br>
 z.B. eine Baumstruktur zu nutzen um Zahlenreihen erst zu sortieren, und dann zu filtern. Dadurch kann man viel effizienter Programmieren. Solche Konstrukte zu erkennen und zu erstellen machen gute Programmierer aus.
 
@@ -247,6 +270,77 @@ z.B. Statt `datei.c` zu nutzen welches eine `max()`-Funktion und `int main()`-Fu
 
 Note: um weitere Directories hinzuzufügen: explizit mittels `-L`für Bibliotheken und `-I` für Headerdateien beim Kompilieren angeben.
 
+#### Speicher
+- Speicher besteht aus Reihe von Bytes
+  - `int` besteht aus 4 aufeinanderfolgenden Bytes
+  - Arrays
+    - Implizit ein Pointer
+    - Haben eine fest definierte Länge; es gibt keine Möglichkeit auf mehr Speicher zuzugreifen nachdem sie definiert wurde
+    - Sehr schnell
+    - z.B. `char a[128];` oder `int b[5] = {3, 8, 2, 0, 9};` reserviert 128 bzw. 5 Bytes für die jeweiligen Arrays; Zugriff auf Werde mit Index (`a[57] = 98;`)
+    - <span style="color:red">**Es gibt beim Zugriff auf Arrays keinerlei Überprüfungen auf dessen Grenzen!!!**</span> Sprich, der Compiler (das ist aber nur in C der Fall) schützt uns nicht davor auf Array-Felder zuzugreifen, die gar nicht existieren. Das treibt die Speichergröße in die Höhe. Deßwegen muss man selber testen ob die Array-Grenzen überschritten werden oder nicht.
+    - Integervariable eines Arrays: hat eine Adresse im Array (z.B. der Prozessor übersetzt `a[0][0]` auf `0`). Der Compiler weist jedem Array, jedem Variablen etc. einen Speicherplatz im Prozessor zu. Das nennt man dann eine Adresse der Variablen.
+- Deklaration vs. Zuweisung einer Variablen (siehe Vocab-Liste)
+
+```cpp
+
+void add2 (int s, int a, int b) {
+  s = a + b;
+}
+
+// Adressen / Pointer
+void add3 (int *s, int a, int b) {
+  *s = a + b; // an die Adresse des int, weist den Wert von a + b zu
+}
+
+int main () {
+  int x = 5, y = 3, sum = 0;
+
+  add2(sum, x, y);
+  printf(sum) // druckt sum = 0 aus weil die Variable s aus der add2-Funktion nicht gespeichert wird
+
+  add3(&sum, x, y); // weise der Variablen "Sum" eine neue Adresse zu
+  printf(sum) // druckt sum = 8 aus weil das * und das & Zeichen
+}
+```
+
+- **Call by Value:**
+  - Parameterübergabe als Wert
+  - Werte der Variablen werden übergeben
+  - Werte der Variablen stehen als lokale Kopie zur Verfügung
+  - Änderung sichtbar innerhalb der Funktion
+- **Call by reference**
+  - Parameterübergabe als Adresse
+  - Adressen der Variablen werden übergeben
+  - Adresse steht lokal zur Verfügung und Zugriff auf Speicherort der übergebenen Variable ist möglich
+  - Änderungen sichtbar über die Funktion hinaus
+
+##### Pointer und Adressen
+Folgendes Beispiel zeigt wie man eine Variable neu definieren kann sie direkt zu referenzieren (sondern nur ihre Adresse) durch die Nutzung von Pointers und Adressen:
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int a, b;
+  int *p1, *p2;
+
+  a = 1; b = 17; p1 = &a, p2 = &b;
+
+  printf("a = %d, b = %d, p1 = %d, p2 = %d\n", a, b, *p1, *p2 ); // output: a = 1, b = 17, p1 = 1, p2 = 17
+
+  *p1 = *p2;
+
+  printf("a = %d, b = %d, p1 = %d, p2 = %d\n", a, b, *p1, *p2 ); // output: a = 17, b = 17, p1 = 17, p2 = 17
+}
+```
+
+#### Datenstrukturen
+- Variablen: gut für einzelne Elemente
+- Probleme: D
+
+
 ## Vocab
 
 | **Deutsch** | **English** | **Definition** |
@@ -256,11 +350,13 @@ Note: um weitere Directories hinzuzufügen: explizit mittels `-L`für Bibliothek
 | Kernbetriebssystem | Kernel |
 | Quellcode | Source code | unformatted ASCII text; should be well documented |
 | . | LLVM | ... |
-| . | ASCII | ... |
+| . | ASCII | Jedes Zeichen hat eine ASCII-Nummer, die in einen binären Code (xxx xxx {0,1}) umgewandelt wird. |
 | . | GCC | ... |
 | Pseudocode | Pseudocode | ... |
 | . | Syntax | legt fest, welche Zeichenketten Teil der Sprache sind |
 | . | Semantik | legt fest die Zeichenkette (Syntax) bedeutet |
+| Deklaration einer Variablen | . | Speicherreservierung für Variable |
+| Zuweisung einer Variablen | . | Belegung des Speichers mit dem Wert einer Variablen |
 
 ## Syntax & Semantics
 
@@ -281,6 +377,8 @@ Note: um weitere Directories hinzuzufügen: explizit mittels `-L`für Bibliothek
     * printf Platzhalter: `%c`
   * `float`
   * `void`
+  * Pointer: `*`
+  * Adresse: `&`
   * Notiz: Boolean gibt es nicht; `int boolean = 0` repräsentiert `false`
   * ...
 * Mathematische Operationen
