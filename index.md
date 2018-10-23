@@ -3,16 +3,15 @@ layout: default
 title: "Notes"
 ---
 
-### Get Started
+[WiSe 18/19]
+- Intro to Programming (6 ECTS)
+- Rechnerorganisation (6 ECTS)
+- Formale Sprachen und Automaten (6 ECTS)
+- Informatik Propädeutikum (3 ECTS)
+- Webtechnologien (6 ECTS)
+- Technikrecht I (6 ECTS)
 
-Start by [creating a new post](http://jekyllrb.com/docs/posts/) one of the categories listed in `_config.yml`. It will appear in the navigation on the left once recompiled. Or use the supplied script to make creating pages easier:
-
+**Create a new post:**
 ```bash
 ruby bin/jekyll-page "Some Page Title" ref
 ```
-
-#### Don't Forget
-
-- Add your own content to this page (i.e. `index.md`) and change the `title`
-- Change `title` and `subtitle` defined in `config.yml` for your site
-- Set the `baseurl` in `_config.yml` for your repo if deploying to GitHub pages

@@ -12,6 +12,7 @@ order: 2
 3. [Kontrollstrukturen & Funktionen](https://isis.tu-berlin.de/pluginfile.php/1098309/mod_resource/content/3/ws1819-ckurs-tag3.pdf)
 4. [Rekursive Funktionen & Bibliotheken](https://isis.tu-berlin.de/pluginfile.php/1101335/mod_resource/content/2/ws1819-ckurs-tag4.pdf)
 5. [Arrays & Adressen](https://isis.tu-berlin.de/pluginfile.php/1106762/mod_resource/content/1/ws1819-ckurs-tag5.pdf)
+6. [Dynamische Speicherverwaltung](https://isis.tu-berlin.de/pluginfile.php/1109686/mod_resource/content/1/ws1819-ckurs-tag6.pdf)
 
 #### C Code
 * Entwickelt zwischen 1969 und 1973 von Dennis Ritchie (Bell Labs); Touring-Award Gewonnen
@@ -270,23 +271,71 @@ z.B. Statt `datei.c` zu nutzen welches eine `max()`-Funktion und `int main()`-Fu
 
 Note: um weitere Directories hinzuzufügen: explizit mittels `-L`für Bibliotheken und `-I` für Headerdateien beim Kompilieren angeben.
 
-#### Speicher
+### Speicher
+
+#### Speicher & Adressen von Variablen
 - Speicher besteht aus Reihe von Bytes
   - `int` besteht aus 4 aufeinanderfolgenden Bytes
-  - Arrays
-    - Implizit ein Pointer
-    - Haben eine fest definierte Länge; es gibt keine Möglichkeit auf mehr Speicher zuzugreifen nachdem sie definiert wurde
-    - Sehr schnell
-    - z.B. `char a[128];` oder `int b[5] = {3, 8, 2, 0, 9};` reserviert 128 bzw. 5 Bytes für die jeweiligen Arrays; Zugriff auf Werde mit Index (`a[57] = 98;`)
-    - <span style="color:red">**Es gibt beim Zugriff auf Arrays keinerlei Überprüfungen auf dessen Grenzen!!!**</span> Sprich, der Compiler (das ist aber nur in C der Fall) schützt uns nicht davor auf Array-Felder zuzugreifen, die gar nicht existieren. Das treibt die Speichergröße in die Höhe. Deßwegen muss man selber testen ob die Array-Grenzen überschritten werden oder nicht.
-    - Integervariable eines Arrays: hat eine Adresse im Array (z.B. der Prozessor übersetzt `a[0][0]` auf `0`). Der Compiler weist jedem Array, jedem Variablen etc. einen Speicherplatz im Prozessor zu. Das nennt man dann eine Adresse der Variablen.
 - Deklaration vs. Zuweisung einer Variablen (siehe Vocab-Liste)
+- Arrays
+  - Implizit ein Pointer
+  - Haben eine fest definierte Länge; es gibt keine Möglichkeit auf mehr Speicher zuzugreifen nachdem sie definiert wurde
+  - Sehr schnell
+  - z.B. `char a[128];` oder `int b[5] = {3, 8, 2, 0, 9};` reserviert 128 bzw. 5 Bytes für die jeweiligen Arrays; Zugriff auf Werde mit Index (`a[57] = 98;`)
+  - <span style="color:red">**Es gibt beim Zugriff auf Arrays keinerlei Überprüfungen auf dessen Grenzen!!!**</span> Sprich, der Compiler (das ist aber nur in C der Fall) schützt uns nicht davor auf Array-Felder zuzugreifen, die gar nicht existieren. Das treibt die Speichergröße in die Höhe. Deßwegen muss man selber testen ob die Array-Grenzen überschritten werden oder nicht.
+    - In vielen Fällen ist das der Grund für eine Sicherheitslücke in einem Programm: die Indexe eines Arrays in C wurden nicht überprüft.
 
+- **Call by Value:**
+  - Parameterübergabe als Wert
+  - Werte der Variablen werden übergeben
+  - Werte der Variablen stehen als lokale Kopie zur Verfügung
+  - Änderung sichtbar innerhalb der Funktion
+- **Call by reference**
+  - Parameterübergabe als Adresse
+  - Adressen der Variablen werden übergeben
+  - Adresse steht lokal zur Verfügung und Zugriff auf Speicherort der übergebenen Variable ist möglich
+  - Änderungen sichtbar über die Funktion hinaus
+  - Nutzt Pointers
+
+##### Pointer und Adressen
+
+- **Adressen**
+  - `&<variable>`
+  - Integervariable eines Arrays: hat eine Adresse im Array (z.B. der Prozessor übersetzt `a[0][0]` auf `0`). Der Compiler weist jedem Array, jedem Variablen etc. einen Speicherplatz im Prozessor zu. Das nennt man dann eine Adresse der Variablen.
+  - Adressen werden als Hexadezimalzahlen dargestellt
+    - `printf("%p", &number)` von Adressen/Pointer auf Variablen nutzen das Zeichen `%p`
+- **Pointer**
+  - `*<variable>` (oder `array[]`)
+
+Folgende Beispiele zeigen wie man eine Variable neu definieren kann sie direkt zu referenzieren (sondern nur ihre Adresse) durch die Nutzung von Pointers und Adressen:
+
+**EXAMPLE 1**
 ```cpp
+#include <stdio.h>
+
+int main() {
+
+  // Define variables (and their adresses)
+  int a, b;
+  int *p1, *p2;
+  a = 1; b = 17; p1 = &a, p2 = &b;
+
+  // Before assigning a pointer
+  printf("a = %d, b = %d, p1 = %d, p2 = %d\n", a, b, *p1, *p2 ); // output: a = 1, b = 17, p1 = 1, p2 = 17
+
+  // After assigning a pointer
+  *p1 = *p2;
+  printf("a = %d, b = %d, p1 = %d, p2 = %d\n", a, b, *p1, *p2 ); // output: a = 17, b = 17, p1 = 17, p2 = 17
+
+}
 
 void add2 (int s, int a, int b) {
   s = a + b;
 }
+```
+
+**EXAMPLE 2**
+```cpp
 
 // Adressen / Pointer
 void add3 (int *s, int a, int b) {
@@ -304,43 +353,92 @@ int main () {
 }
 ```
 
-- **Call by Value:**
-  - Parameterübergabe als Wert
-  - Werte der Variablen werden übergeben
-  - Werte der Variablen stehen als lokale Kopie zur Verfügung
-  - Änderung sichtbar innerhalb der Funktion
-- **Call by reference**
-  - Parameterübergabe als Adresse
-  - Adressen der Variablen werden übergeben
-  - Adresse steht lokal zur Verfügung und Zugriff auf Speicherort der übergebenen Variable ist möglich
-  - Änderungen sichtbar über die Funktion hinaus
-
-##### Pointer und Adressen
-Folgendes Beispiel zeigt wie man eine Variable neu definieren kann sie direkt zu referenzieren (sondern nur ihre Adresse) durch die Nutzung von Pointers und Adressen:
+**EXAMPLE 3**
 
 ```cpp
-#include <stdio.h>
-
 int main() {
 
-  int a, b;
-  int *p1, *p2;
+  // Define int number
+  int number = 5;
+  printf("Nummer: %d, Adresse: %p\n", number, &number); // Output: Nummer: 5, Adresse: 0x7ffeef2008f4
 
-  a = 1; b = 17; p1 = &a, p2 = &b;
+  // Assign pointer to address of variable "number"
+  int *pointer = &number;
 
-  printf("a = %d, b = %d, p1 = %d, p2 = %d\n", a, b, *p1, *p2 ); // output: a = 1, b = 17, p1 = 1, p2 = 17
+  // Redefine pointer
+  *pointer = 7;
+  printf("Nummer: %d, Adresse: %p\n", number, &number); // Output: Nummer: 7, Adresse: 0x7ffeef2008f4
 
-  *p1 = *p2;
-
-  printf("a = %d, b = %d, p1 = %d, p2 = %d\n", a, b, *p1, *p2 ); // output: a = 17, b = 17, p1 = 17, p2 = 17
 }
 ```
 
-#### Datenstrukturen
-- Variablen: gut für einzelne Elemente
-- Probleme: D
+#### Dynamische Speicherverwaltung
+
+Arrays haben eine feste Dimension mit festem Speicherort; Pointer müssen erst dynamisch allokiert werden.
+
+##### Abstraktion
+- Virtueller Speicher: Ein Bytearray
+- Programmsicht
+  - Theorie:
+    - Jedes Programm hat seinen eigenen Speicher mit (potentiell) unbegrenzter Speichermenge
+    - Zugriff auf Speicherbereiche ist gleich schnell
+  - Praxis:
+    - Physikalischer Speicher wird geteilt
+    - Betriebssystem allokiert und verwaltet Speichers
+    - Anwendungen sind speicherdominiert
+    - Speicherhierarchie: Cache, RAM, Platte
+    - Speicherzugriffsfehler sind besonders schwer zu finden da Effekte oft fern der Ursache sind
+
+##### Effiziente Speicherverwaltung (für C Programme)
+
+- Zuteilung von Speicher nach Bedarf (da Ressourcen begrenzt sind)
+- Programmkomponente
+  - C-Code (Programm)
+  - Datenstrukturen
+  - C-Bibliotheken, externe Funktionen
+
+##### Dynamische Speicherallokation (in C)
+- Zuteilung von Speicher nach Bedarf (da begrenzte Ressourcen)
+- Problematiken
+  - Compilezeit: währed des Compilieren
+  - Laufzeit: während des Laufens des Programms
+
+1. Implizite Speichernutzung:
+- Sa wir nicht vorab wissen wie viel Speicher das Programm braucht, nutzen wir eine dynamisch wachsende Datenstruktur für die SPeicherung der Variablen ("User-Stack") <br>
+
+2. Explite Speichernutzung:
+- Speicher muss explizit wieder freigegeben werden
+- z.B. `malloc` mit `#include <stdlib.h>` oder `calloc`
+
+**Malloc**
+- Gibt einen "nullpointer" zurück
+- Ist `void` (generischer Typ)
+- Hilfsfunktionen (mit #include <stderr.h>)
+  - `errno`: Codes von 1 bis 127 mit Fehlern, siehe `errno.h`-Datei
+  - `perrno`: eine für Menschen leserliche Fehlermeldung
+  ```cpp
+  #include <stdlib.h>
+  void* malloc(size_t size)
+  // return: Pointer zum Speicherblock mit mindestens size bytes
+  ```
+  - Errormessages ausdrucken:
+  - `cat values.txt | HELLOWORLD >> result`: druckt stdout
+  - `cat <values.txt | HELLOWORLD 2> result`: druckt stderr
+  - `|`: Umleitung der Ausgabe in eine Datei (z.B. HELLOWORLD)
+
+**Calloc**
+- "clear allocation"
 
 
+**Free**
+-
+
+
+
+
+
+
+---
 ## Vocab
 
 | **Deutsch** | **English** | **Definition** |
@@ -366,7 +464,10 @@ int main() {
 | **Component** | **Detail** | **Example** |
 | --- | --- | --- |
 | Function | indicated by `()` and followed by `{}` which contains commands/variables essential for the function | `main()`, `if (<condition>) {<block-to-execute>}`|
-| Block | `{}` |
+| Block | `{}` | . |
+| Funktion hat eigentlich keinen Rückgabewert | Rückgabe alles OK == 0; Fehler != 0| `int add (int *sum, int a, int b)` |
+| Funktion hat Rückgabewert | Rückgabe alles OK != 0; Fehler == 0 | `void *melloc(size_t size)` |
+| Setzen des Fehlercode `errno` | `perrno` nutzen um Fehlercode/-meldung auf der Konsole via `stderr` auszugeben | . |
 
 * Typen
   * `int`
@@ -396,6 +497,9 @@ int main() {
   * `/* <comment> */`
   * `//`
 
+**Casten:** Datentypen können umgewandelt werden durch ein sogenanntes "casten"
+
+
 **Einzelzeichen**
 * `%c`: char
 * `%d`: int
@@ -417,6 +521,8 @@ int main() {
 * `\"`: "
 * `\\`: \
 * `%%`: %
+
+---
 
 ## Further shell commands
 ```shell
