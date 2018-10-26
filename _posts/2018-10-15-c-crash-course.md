@@ -13,6 +13,8 @@ order: 2
 4. [Rekursive Funktionen & Bibliotheken](https://isis.tu-berlin.de/pluginfile.php/1101335/mod_resource/content/2/ws1819-ckurs-tag4.pdf)
 5. [Arrays & Adressen](https://isis.tu-berlin.de/pluginfile.php/1106762/mod_resource/content/1/ws1819-ckurs-tag5.pdf)
 6. [Dynamische Speicherverwaltung](https://isis.tu-berlin.de/pluginfile.php/1109686/mod_resource/content/1/ws1819-ckurs-tag6.pdf)
+7. [Strings](https://isis.tu-berlin.de/pluginfile.php/1112025/mod_resource/content/1/ws1819-ckurs-tag7.pdf)
+8. [Debugging & Stack](https://isis.tu-berlin.de/pluginfile.php/1113477/mod_resource/content/1/ws1819-ckurs-tag8.pdf)
 
 #### C Code
 * Entwickelt zwischen 1969 und 1973 von Dennis Ritchie (Bell Labs); Touring-Award Gewonnen
@@ -274,16 +276,65 @@ Note: um weitere Directories hinzuzufügen: explizit mittels `-L`für Bibliothek
 ### Speicher
 
 #### Speicher & Adressen von Variablen
-- Speicher besteht aus Reihe von Bytes
-  - `int` besteht aus 4 aufeinanderfolgenden Bytes
-- Deklaration vs. Zuweisung einer Variablen (siehe Vocab-Liste)
-- Arrays
-  - Implizit ein Pointer
-  - Haben eine fest definierte Länge; es gibt keine Möglichkeit auf mehr Speicher zuzugreifen nachdem sie definiert wurde
-  - Sehr schnell
-  - z.B. `char a[128];` oder `int b[5] = {3, 8, 2, 0, 9};` reserviert 128 bzw. 5 Bytes für die jeweiligen Arrays; Zugriff auf Werde mit Index (`a[57] = 98;`)
-  - <span style="color:red">**Es gibt beim Zugriff auf Arrays keinerlei Überprüfungen auf dessen Grenzen!!!**</span> Sprich, der Compiler (das ist aber nur in C der Fall) schützt uns nicht davor auf Array-Felder zuzugreifen, die gar nicht existieren. Das treibt die Speichergröße in die Höhe. Deßwegen muss man selber testen ob die Array-Grenzen überschritten werden oder nicht.
-    - In vielen Fällen ist das der Grund für eine Sicherheitslücke in einem Programm: die Indexe eines Arrays in C wurden nicht überprüft.
+Speicher besteht aus Reihe von Bytes <br>
+Deklaration vs. Zuweisung einer Variablen (siehe Vocab-Liste)
+
+##### Int
+- `int` besteht aus 4 aufeinanderfolgenden Bytes
+
+##### Strings & Arrays
+
+###### Arrays
+- Implizit ein Pointer
+- Haben eine fest definierte Länge; es gibt keine Möglichkeit auf mehr Speicher zuzugreifen nachdem sie definiert wurde
+- Sehr schnell
+- z.B. `char a[128];` oder `int b[5] = {3, 8, 2, 0, 9};` reserviert 128 bzw. 5 Bytes für die jeweiligen Arrays; Zugriff auf Werde mit Index (`a[57] = 98;`)
+- <span style="color:red">**Es gibt beim Zugriff auf Arrays keinerlei Überprüfungen auf dessen Grenzen!!!**</span> Sprich, der Compiler (das ist aber nur in C der Fall) schützt uns nicht davor auf Array-Felder zuzugreifen, die gar nicht existieren. Das treibt die Speichergröße in die Höhe. Deßwegen muss man selber testen ob die Array-Grenzen überschritten werden oder nicht.
+  - In vielen Fällen ist das der Grund für eine Sicherheitslücke in einem Programm: die Indexe eines Arrays in C wurden nicht überprüft.
+
+###### Strings
+- Strings sind `char`-arrays, die mit `\0`beendet werden
+- Liste von Zeichen/chars, die hintereinander im Speicher stehen
+- `char` besteht aus 1 Byte
+- z.B. `char string[] = "Text";` nutzt 5 Bytes für die Speicherung von `Text\0` (inkl. Null-Byte)
+- Die Kodierung des Zeichensatzes kann unterschiedlich seinen
+  - ASCII-Zeichensatz 7 Bit
+  - ASCII-Zeichensatz 8 Bit (PC)
+  - ANSI-Zeichensatz (Windows)
+  - UTF-8 (1-4 char pro Zeichen) (MacOS X, moderne Unix)
+  - UTF-16 (2 CHAR PRO Zeichen) (moderne Windows)
+
+**String-Funktionen**
+- `int strlen(char *s)`
+  - Länge des Strings ohne `\0`
+- `char *strncpy(char *dst, char *src, size_t n)`
+  - Copiert String source nach String destination
+  - alle Zeichen bis zur terminierung `\0` (aber maximal n chars)
+  - Länge von `dst` sollte als parameter `n` übergeben werden
+-
+
+
+
+**Wie viel Speicher brauchen meine Variablen?**
+```cpp
+int zahl = 10;
+int *pointer = &zahl;
+unsigned long int lange_zahl = 10;
+short int kurze_zahl = 7;
+int array[5];
+
+char *string1 = "Hallo, das ist ein String";
+char string2[] = "Hallo, das ist ein String";
+
+printf("sizeof zahl: %lu\n", sizeof zahl); // Output: 4
+printf("sizeof pointer: %lu\n", sizeof pointer); // output: 8
+printf("sizeof lange zahl: %lu\n", sizeof lange_zahl); // output: 8
+printf("sizeof kurze zahl: %lu\n", sizeof kurze_zahl); // output: 2
+printf("sizeof array: %lu\n", sizeof array); // output: 20 (weil [5 Zahlen * 4 bytes])
+printf("sizeof string1: %lu\n", sizeof string1); // output: 8 (weil: pointer nutzt H und invisible 0 am Ende des Strings als Referenzpunkt)
+printf("sizeof string2: %lu\n", sizeof string2); // output: 26 (wehil: string zählt alle Buchstaben + die 0 am Ende des Strings)
+```
+
 
 - **Call by Value:**
   - Parameterübergabe als Wert
@@ -306,6 +357,7 @@ Note: um weitere Directories hinzuzufügen: explizit mittels `-L`für Bibliothek
     - `printf("%p", &number)` von Adressen/Pointer auf Variablen nutzen das Zeichen `%p`
 - **Pointer**
   - `*<variable>` (oder `array[]`)
+  - z.B. `*pointer` zeigt auf den gleichen Byte (bzw. die Adresse) wie array[0]. array[1] greift auf den Speicher der 1 Byte rechts von `*pointer` ist.
 
 Folgende Beispiele zeigen wie man eine Variable neu definieren kann sie direkt zu referenzieren (sondern nur ihre Adresse) durch die Nutzung von Pointers und Adressen:
 
@@ -328,16 +380,15 @@ int main() {
   printf("a = %d, b = %d, p1 = %d, p2 = %d\n", a, b, *p1, *p2 ); // output: a = 17, b = 17, p1 = 17, p2 = 17
 
 }
-
-void add2 (int s, int a, int b) {
-  s = a + b;
-}
 ```
 
 **EXAMPLE 2**
 ```cpp
-
 // Adressen / Pointer
+void add2 (int s, int a, int b) {
+  s = a + b;
+}
+
 void add3 (int *s, int a, int b) {
   *s = a + b; // an die Adresse des int, weist den Wert von a + b zu
 }
@@ -426,6 +477,14 @@ Arrays haben eine feste Dimension mit festem Speicherort; Pointer müssen erst d
   - `cat <values.txt | HELLOWORLD 2> result`: druckt stderr
   - `|`: Umleitung der Ausgabe in eine Datei (z.B. HELLOWORLD)
 
+Beispiel
+```cpp
+int main(int argc, char **argv) {
+  int len = atoi(argv[1]);
+  char *array = malloc
+}
+```
+
 **Calloc**
 - "clear allocation"
 
@@ -434,6 +493,11 @@ Arrays haben eine feste Dimension mit festem Speicherort; Pointer müssen erst d
 -
 
 
+### Debugging
+
+**Bugs**
+- Compiler gibt syntaktische/semantische Fehlern
+- Programm h hält mit Laufzeit Fehlern, hält nie, hat inkorrekte Resultate, hat manchmal inkorrekte Resultate
 
 
 
@@ -513,7 +577,7 @@ Arrays haben eine feste Dimension mit festem Speicherort; Pointer müssen erst d
 
 **Sonderzeichen**
 * `\n`: new line
-* `\t`: tabulator
+* `\t`: tab
 * `\0`: EOS; Endzeichen in String
 
 **Reservierte Zeichen**

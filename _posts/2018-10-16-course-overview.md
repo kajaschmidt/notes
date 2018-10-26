@@ -28,10 +28,9 @@ order: 1
 - [x] Aufgabe 2 – bis 19.10.2018, 21:59Uhr
 - [x] Aufgabe 3 – bis 22.10.2018, 21:59Uhr
 - [x] Aufgabe 4 – bis 23.10.2018, 21:59Uhr
-- [ ] Aufgabe 5 – bis 24.10.2018, 21:59Uhr
-- [ ] Aufgabe 6 – bis 25.10.2018, 21:59Uhr
+- [x] Aufgabe 5 – bis 24.10.2018, 21:59Uhr
+- [x] Aufgabe 6 – bis 25.10.2018, 21:59Uhr
 - [ ] Aufgabe 7 – bis 26.10.2018, 21:59Uhr
-- [ ] Aufgabe 8 (Debugging)
 
 ##### IntroProg
 - [ ] Gruppenaufgabe 1
