@@ -494,12 +494,43 @@ int main(int argc, char **argv) {
 
 
 ### Debugging
+Tutor empfiehlt Visual Studio Code, mit der Debug extension
 
-**Bugs**
+
+**Bugs** <br>
 - Compiler gibt syntaktische/semantische Fehlern
 - Programm h hält mit Laufzeit Fehlern, hält nie, hat inkorrekte Resultate, hat manchmal inkorrekte Resultate
 
 
+**Step Debugger: gdb** <br>
+Debugging mit Break Points.
+
+1. Kompilier den Code mit Flag `-g`
+2. Debug die fertig ausgeführte Programmdatei mit `gdb <Programmname>`
+
+Jetzt sind wir im gdb Debugger des Programms:
+```shell
+(gdb) run // executes programm
+(gdb) break 11 // stop at Line 11
+(gdb) run // executes programm and stops at line 11
+(gdb) print <variable in line 11> // prints variable value in line 11
+(gdb) next // goes one line further down (or back if we're in a for loop)
+(gdb) print <variable in line 11> // prints variable value in line 11 in the second loop-iteration
+(gdb) continue // continue runnning test
+(gdb) stop // stops this particular test
+(gdb) clear // removes break points defined with "break 11"
+
+// other
+(gdb) step // your 'next' is a step to the next line INTO the function you may have used -> e.g. step into the printf function is really weird!
+```
+
+Debugging mit conditional break points:
+```shell
+(gdb) break 11 // break point in line 11
+(gdb) condition 1 (i > 5) // breakpoint hält nur an wenn i im loop größer als 5 ist
+(gdb) run
+(gdb) print i
+```
 
 
 ---
